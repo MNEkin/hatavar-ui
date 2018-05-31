@@ -3,6 +3,9 @@ import { User } from '../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PasswordValidation } from '../password-validation'
 import { UserService } from '../shared/user/user.service';
+import { Router } from '@angular/router';
+import { AlertService } from '../shared/alert.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +22,11 @@ export class SignupComponent implements OnInit {
       Validators: PasswordValidation.MatchPassword
     })
    }*/
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private alertservice: AlertService) { }
+
   user: User = new User();
   ngOnInit() {
   }
@@ -29,8 +36,14 @@ export class SignupComponent implements OnInit {
       alert("Password Missmatch!");
     }
     else {
-      this.userService.signUp(this.user).subscribe(data => {
-        alert("saved")
+      this.userService.signUp(this.user).subscribe(
+        data => {
+        this.alertservice.success('Signed up ', true);
+        this.router.navigate(['/login']);
+      },
+      error=>{
+        this.alertservice.error(error);
+        
       });
     }
   }

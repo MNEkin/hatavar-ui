@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+  <div class="form-group">
+    <label for="title">Email : </label>
+    <input type="email" class="form-control" id="email" required [(ngModel)]="user.userEmail" name="userEmail" #email="ngModel">
+    <!--By using the last piece you can use email inside html like below-->
+  </div>
+  <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+    E-Mail is required
+  </div>
+  <div class="form-group">
+    <label for="password">Password : </label>
+    <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
+  </div>
+  <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+    Password is required
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Submit</button>
+    <a [routerLink]="['/signup']" class="btn btn-link">Sign-Up</a>
+  </div>
+</form>

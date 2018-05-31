@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BugRecord } from '../../bug-record';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,9 @@ export class BugServiceService {
 
   public save(bug: BugRecord) {
     return this.http.post(this.BUG_API, bug);
+  }
+
+  public getAll(): Observable<BugRecord[]>{
+    return this.http.get<BugRecord[]>(this.BUG_API);
   }
 }

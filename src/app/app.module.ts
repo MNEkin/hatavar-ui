@@ -7,6 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { BugServiceService } from './shared/bug/bug-service.service';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { AlertComponent } from './_directives/alert/alert.component';
+import { AlertService } from './shared/alert.service';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
   {
@@ -20,6 +24,14 @@ const appRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   }
 ];
 
@@ -27,7 +39,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     UploadBugComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent,
+    AlertComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +53,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     BugServiceService,
-    FormBuilder
+    FormBuilder,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })
