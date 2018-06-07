@@ -13,18 +13,29 @@ export class UploadBugComponent implements OnInit {
   isUploadComplete: boolean = true;
   bug: BugRecord = new BugRecord();
   fileCount: number = 0;
+  files: Array<File> = [];
   ngOnInit() {
   }
 
   handleFileInput(files: FileList): void {
+    console.log(files);
     this.isUploadComplete = false;
     while (this.fileCount < files.length) {
-      this.bug.files.push(files.item(this.fileCount));
+      //this.bug.files.push(files.item(this.fileCount));
+      this.files.push(files.item(this.fileCount));
       this.fileCount++;
     }
     this.isUploadComplete = true;
   }
   onSubmit(): void {
-    this.bugRecordService.save(this.bug).subscribe(data => alert("olmuyor"));
+    let formData: FormData = new FormData();
+    for (let i = 0; i<this.files.length; i++) {
+      formData.append('file[]', this.files[i], this.files[i].name);
+    }
+    let bugRecord = JSON.stringify(this.bug);
+    formData.append("bugRecord", bugRecord);
+    //formData.append("title", this.bug.title);
+    //formData.append("content", this.bug.content);;
+    this.bugRecordService.save(formData).subscribe(data => alert("olmuyor"));
   }
 }
